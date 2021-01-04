@@ -5,5 +5,5 @@ module EmailClient {
     requires javafx.web;
 
     opens pl.patryklubik;
-    opens pl.patryklubik.view;
+    opens pl.patryklubik.controller;
 }

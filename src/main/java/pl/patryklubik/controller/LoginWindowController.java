@@ -1,4 +1,4 @@
-package pl.patryklubik.view;
+package pl.patryklubik.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
