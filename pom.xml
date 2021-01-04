@@ -62,7 +62,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/classes/pl/patryklubik/</outputDirectory>
+                            <outputDirectory>${basedir}/target/classes/pl/patryklubik/view</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>src/main/java/pl/patryklubik/view/</directory>
