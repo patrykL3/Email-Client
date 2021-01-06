@@ -9,7 +9,7 @@ import pl.patryklubik.view.ViewFactory;
 
 public abstract class BaseController {
 
-    private EmailManager emailManager;
+    protected EmailManager emailManager;
     protected ViewFactory viewFactory;
     private String fxmlName;
 
