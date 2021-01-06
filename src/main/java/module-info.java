@@ -1,7 +1,9 @@
-module org.openjfx {
+module EmailClient {
     requires javafx.fxml;
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.web;
-    exports pl.patryklubik;
+
+    opens pl.patryklubik;
+    opens pl.patryklubik.controller;
 }
