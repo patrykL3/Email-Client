@@ -1,6 +1,7 @@
 package pl.patryklubik.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -10,7 +11,10 @@ import pl.patryklubik.controller.services.LoginService;
 import pl.patryklubik.model.EmailAccount;
 import pl.patryklubik.view.ViewFactory;
 
-public class LoginWindowController extends BaseController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class LoginWindowController extends BaseController implements Initializable {
 
     @FXML
     private TextField emailAddressField;
@@ -41,9 +45,19 @@ public class LoginWindowController extends BaseController {
                 switch (emailLoginResult) {
                     case SUCCESS:
                         System.out.println("login succesfull!!!" + emailAccount);
-                        viewFactory.showMainWindow();
+                        if(!viewFactory.isMainViewInitialized()){
+                            viewFactory.showMainWindow();
+                        }
                         Stage stage = (Stage) errorLabel.getScene().getWindow();
                         viewFactory.closeStage(stage);
+                        return;
+                    case FAILED_BY_CREDENTIALS:
+                        errorLabel.setText("invalid credentials!");
+                        return;
+                    case FAILED_BY_UNEXPECTED_ERROR:
+                        errorLabel.setText("unexpected error!");
+                        return;
+                    default:
                         return;
                 }
             });
@@ -63,4 +77,11 @@ public class LoginWindowController extends BaseController {
         return true;
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        emailAddressField.setText("");
+        passwordField.setText("");
+
+
+    }
 }
