@@ -12,9 +12,14 @@ public class EmailManager {
 
     //Folder handling:
     private TreeItem<String> foldersRoot = new TreeItem<String>("");
+    private EmailTreeItem<String> selectedFolder;
 
     public TreeItem<String> getFoldersRoot(){
         return foldersRoot;
+    }
+
+    public void setSelectedFolder(EmailTreeItem<String> selectedFolder) {
+        this.selectedFolder = selectedFolder;
     }
 
     public void addEmailAccount(EmailAccount emailAccount){
@@ -23,4 +28,5 @@ public class EmailManager {
         fetchFoldersService.start();
         foldersRoot.getChildren().add(treeItem);
     }
+
 }

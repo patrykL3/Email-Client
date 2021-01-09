@@ -7,5 +7,7 @@ module EmailClient {
     requires java.mail;
 
     opens pl.patryklubik;
+    opens pl.patryklubik.view;
     opens pl.patryklubik.controller;
+    opens pl.patryklubik.model;
 }
