@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
 import pl.patryklubik.EmailManager;
+import pl.patryklubik.controller.services.MessageRendererService;
 import pl.patryklubik.model.EmailMessage;
 import pl.patryklubik.model.EmailTreeItem;
 import pl.patryklubik.model.SizeInteger;
@@ -25,6 +26,8 @@ import java.util.ResourceBundle;
 
 
 public class MainWindowController extends BaseController implements Initializable {
+
+    private MessageRendererService messageRendererService;
 
     @FXML
     private TreeView<String> emailsTreeView;
@@ -69,7 +72,22 @@ public class MainWindowController extends BaseController implements Initializabl
         setUpEmailsTableView();
         setUpFolderSelection();
         setUpBoldRows();
+        setUpMessageRendererService();
+        setUpMessageSelection();
+    }
 
+    private void setUpMessageSelection() {
+        emailsTableView.setOnMouseClicked(event -> {
+            EmailMessage emailMessage = emailsTableView.getSelectionModel().getSelectedItem();
+            if(emailMessage != null){
+                messageRendererService.setEmailMessage(emailMessage);
+                messageRendererService.restart();
+            }
+        });
+    }
+
+    private void setUpMessageRendererService() {
+        messageRendererService = new MessageRendererService(emailWebView.getEngine());
     }
 
     private void setUpEmailsTreeView() {
