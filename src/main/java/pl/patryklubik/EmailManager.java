@@ -1,5 +1,7 @@
 package pl.patryklubik;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import pl.patryklubik.controller.services.FetchFoldersService;
 import pl.patryklubik.controller.services.FolderUpdaterService;
@@ -23,6 +25,11 @@ public class EmailManager {
     private FolderUpdaterService folderUpdaterService;
     private List<Folder> folderList = new ArrayList<Folder>();
     private EmailMessage selectedMessage;
+    private ObservableList<EmailAccount> emailAccounts = FXCollections.observableArrayList();
+
+    public  ObservableList<EmailAccount> getEmailAccounts(){
+        return  emailAccounts;
+    }
 
     public EmailMessage getSelectedMessage() {
         return selectedMessage;
@@ -83,6 +90,7 @@ public class EmailManager {
     }
 
     public void addEmailAccount(EmailAccount emailAccount){
+        emailAccounts.add(emailAccount);
         EmailTreeItem<String> treeItem = new EmailTreeItem<String>(emailAccount.getAddress());
         FetchFoldersService fetchFoldersService = new FetchFoldersService(emailAccount.getStore(), treeItem, folderList);
         fetchFoldersService.start();

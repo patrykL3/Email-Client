@@ -1,10 +1,7 @@
 package pl.patryklubik.view;
 
 import pl.patryklubik.EmailManager;
-import pl.patryklubik.controller.BaseController;
-import pl.patryklubik.controller.LoginWindowController;
-import pl.patryklubik.controller.MainWindowController;
-import pl.patryklubik.controller.OptionsWindowController;
+import pl.patryklubik.controller.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -68,6 +65,12 @@ public class ViewFactory {
     public void showOptionsWindow(){
 
         BaseController controller = new OptionsWindowController(emailManager, this, "OptionsWindow.fxml");
+        initializeStage(controller);
+    }
+
+    public void showComposeMessageWindow(){
+
+        BaseController controller = new ComposeMessageController(emailManager, this, "ComposeMessageWindow.fxml");
         initializeStage(controller);
     }
 

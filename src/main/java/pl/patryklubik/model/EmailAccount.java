@@ -3,6 +3,7 @@ package pl.patryklubik.model;
 /**
  * Create by Patryk Łubik on 06.01.2021.
  */
+import javax.mail.Session;
 import javax.mail.Store;
 import java.util.Properties;
 
@@ -12,6 +13,7 @@ public class EmailAccount {
     private String password;
     private Properties properties;
     private Store store;
+    private Session session;
 
     public String getAddress() {
         return address;
@@ -48,5 +50,18 @@ public class EmailAccount {
         properties.put("mail.smtps.host", "smtp.gmail.com");
         properties.put("mail.smtps.auth", "true");
         properties.put("outgoingHost", "smtp.gmail.com");
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
+
+    @Override
+    public String toString() {
+        return address;
     }
 }
