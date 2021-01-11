@@ -8,6 +8,7 @@ import pl.patryklubik.controller.services.FolderUpdaterService;
 import pl.patryklubik.model.EmailAccount;
 import pl.patryklubik.model.EmailMessage;
 import pl.patryklubik.model.EmailTreeItem;
+import pl.patryklubik.view.IconResolver;
 
 import javax.mail.Flags;
 import javax.mail.Folder;
@@ -26,6 +27,7 @@ public class EmailManager {
     private List<Folder> folderList = new ArrayList<Folder>();
     private EmailMessage selectedMessage;
     private ObservableList<EmailAccount> emailAccounts = FXCollections.observableArrayList();
+    private IconResolver iconResolver = new IconResolver();
 
     public  ObservableList<EmailAccount> getEmailAccounts(){
         return  emailAccounts;
@@ -92,6 +94,7 @@ public class EmailManager {
     public void addEmailAccount(EmailAccount emailAccount){
         emailAccounts.add(emailAccount);
         EmailTreeItem<String> treeItem = new EmailTreeItem<String>(emailAccount.getAddress());
+        treeItem.setGraphic(iconResolver.getIconForFolder(emailAccount.getAddress()));
         FetchFoldersService fetchFoldersService = new FetchFoldersService(emailAccount.getStore(), treeItem, folderList);
         fetchFoldersService.start();
         foldersRoot.getChildren().add(treeItem);
