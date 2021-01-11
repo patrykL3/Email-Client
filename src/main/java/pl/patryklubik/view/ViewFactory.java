@@ -1,10 +1,7 @@
 package pl.patryklubik.view;
 
 import pl.patryklubik.EmailManager;
-import pl.patryklubik.controller.BaseController;
-import pl.patryklubik.controller.LoginWindowController;
-import pl.patryklubik.controller.MainWindowController;
-import pl.patryklubik.controller.OptionsWindowController;
+import pl.patryklubik.controller.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,11 +16,16 @@ public class ViewFactory {
 
     private EmailManager emailManager;
     private ArrayList<Stage> activeStages;
+    private boolean mainViewInitialized = false;
 
     public ViewFactory(EmailManager emailManager) {
 
         this.emailManager = emailManager;
         activeStages = new ArrayList<Stage>();
+    }
+
+    public boolean isMainViewInitialized() {
+        return mainViewInitialized;
     }
 
     //View options handling:
@@ -57,11 +59,23 @@ public class ViewFactory {
 
         BaseController controller = new MainWindowController(emailManager, this, "MainWindow.fxml");
         initializeStage(controller);
+        mainViewInitialized = true;
     }
 
     public void showOptionsWindow(){
 
         BaseController controller = new OptionsWindowController(emailManager, this, "OptionsWindow.fxml");
+        initializeStage(controller);
+    }
+
+    public void showComposeMessageWindow(){
+
+        BaseController controller = new ComposeMessageController(emailManager, this, "ComposeMessageWindow.fxml");
+        initializeStage(controller);
+    }
+
+    public void showEmailDetailsWindow(){
+        BaseController controller = new EmailDetailsController(emailManager, this, "EmailDetailsWindow.fxml");
         initializeStage(controller);
     }
 
@@ -81,7 +95,7 @@ public class ViewFactory {
         stage.setScene(scene);
         stage.show();
         activeStages.add(stage);
-        updateStyles();
+        //updateStyles();
     }
 
     public  void closeStage(Stage stageToClose){
