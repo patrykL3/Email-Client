@@ -41,6 +41,9 @@ public class ComposeMessageController extends BaseController implements Initiali
     private Label errorLabel;
 
     @FXML
+    private Label attachLabel;
+
+    @FXML
     private ChoiceBox<EmailAccount> emailAccountChoice;
 
     @FXML
@@ -77,6 +80,11 @@ public class ComposeMessageController extends BaseController implements Initiali
         if(selectedFile != null){
             attachments.add(selectedFile);
         }
+        setAttachLabelText(selectedFile.getName());
+    }
+
+    private void setAttachLabelText(String selectedFileName) {
+        attachLabel.setText(attachLabel.getText() + selectedFileName + "      ");
     }
 
     @Override
