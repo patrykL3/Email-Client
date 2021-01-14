@@ -9,7 +9,7 @@
 
 <?import javafx.scene.web.WebView?>
 <?import javafx.scene.layout.HBox?>
-<AnchorPane prefHeight="630.0" prefWidth="550.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="630.0" prefWidth="550.0" styleClass="container" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Label layoutX="14.0" layoutY="21.0" prefHeight="16.0" prefWidth="68.0" text="Subject:" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="434.0" />
         <Label layoutX="14.0" layoutY="45.0" prefHeight="16.0" prefWidth="68.0" text="Sender:" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="434.0" />

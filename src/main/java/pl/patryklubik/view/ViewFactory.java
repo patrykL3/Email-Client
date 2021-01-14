@@ -1,5 +1,6 @@
 package pl.patryklubik.view;
 
+import javafx.scene.image.Image;
 import pl.patryklubik.EmailManager;
 import pl.patryklubik.controller.*;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +30,7 @@ public class ViewFactory {
     }
 
     //View options handling:
-    private ColorTheme colorTheme = ColorTheme.DEFAULT;
+    private ColorTheme colorTheme = ColorTheme.DARK;
     private FontSize fontSize = FontSize.MEDIUM;
 
     public ColorTheme getColorTheme() {
@@ -51,35 +52,35 @@ public class ViewFactory {
     public void showLoginWindow(){
 
         BaseController controller = new LoginWindowController(emailManager, this, "LoginWindow.fxml");
-        initializeStage(controller);
+        initializeStage(controller,false);
 
     }
 
     public void showMainWindow(){
 
         BaseController controller = new MainWindowController(emailManager, this, "MainWindow.fxml");
-        initializeStage(controller);
+        initializeStage(controller,true);
         mainViewInitialized = true;
     }
 
     public void showOptionsWindow(){
 
         BaseController controller = new OptionsWindowController(emailManager, this, "OptionsWindow.fxml");
-        initializeStage(controller);
+        initializeStage(controller, false);
     }
 
     public void showComposeMessageWindow(){
 
         BaseController controller = new ComposeMessageController(emailManager, this, "ComposeMessageWindow.fxml");
-        initializeStage(controller);
+        initializeStage(controller, true);
     }
 
     public void showEmailDetailsWindow(){
         BaseController controller = new EmailDetailsController(emailManager, this, "EmailDetailsWindow.fxml");
-        initializeStage(controller);
+        initializeStage(controller, true);
     }
 
-    private void initializeStage(BaseController baseController) {
+    private void initializeStage(BaseController baseController, boolean resizable) {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(baseController.getFxmlName()));
         fxmlLoader.setController(baseController);
@@ -93,9 +94,28 @@ public class ViewFactory {
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
         stage.setScene(scene);
+        updateStyle(scene);
+        stage.getIcons().add(new Image("pl/patryklubik/view/mainIcon.png"));
+        stage.setTitle(chooseWindowTitle(baseController.getFxmlName()));
         stage.show();
+        stage.setResizable(resizable);
         activeStages.add(stage);
-        //updateStyles();
+        updateAllStyles();
+    }
+
+    private String chooseWindowTitle(String fxmlName) {
+        switch (fxmlName) {
+            case "LoginWindow.fxml":
+                return "Login";
+            case "OptionsWindow.fxml":
+                return "Options";
+            case "ComposeMessageWindow.fxml":
+                return "Compose Message";
+            case "EmailDetailsWindow.fxml":
+                return "Email Details";
+            default:
+                return "Email Client";
+        }
     }
 
     public  void closeStage(Stage stageToClose){
@@ -103,12 +123,18 @@ public class ViewFactory {
         activeStages.remove(stageToClose);
     }
 
-    public void updateStyles() {
+    public void updateAllStyles() {
         for (Stage stage: activeStages) {
             Scene scene = stage.getScene();
             scene.getStylesheets().clear();
             scene.getStylesheets().add(getClass().getResource(ColorTheme.getCssPath(colorTheme)).toExternalForm());
             scene.getStylesheets().add(getClass().getResource(FontSize.getCssPath(fontSize)).toExternalForm());
         }
+    }
+
+    private void updateStyle(Scene scene){
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(getClass().getResource(ColorTheme.getCssPath(colorTheme)).toExternalForm());
+        scene.getStylesheets().add(getClass().getResource(FontSize.getCssPath(fontSize)).toExternalForm());
     }
 }
