@@ -13,6 +13,7 @@ import pl.patryklubik.model.EmailTreeItem;
 import pl.patryklubik.model.SizeInteger;
 import pl.patryklubik.view.ViewFactory;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -70,8 +71,19 @@ public class MainWindowController extends BaseController implements Initializabl
     void composeMessageAction() {
         viewFactory.showComposeMessageWindow();
     }
+    @FXML
+    void openInfoPageAction() {
+        openInfoPage();
+    }
 
-
+    public void openInfoPage() {
+        try {
+            URI uri= new URI("https://patryklubik.pl/email-client/");
+            java.awt.Desktop.getDesktop().browse(uri);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

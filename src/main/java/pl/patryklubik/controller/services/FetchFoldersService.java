@@ -3,6 +3,7 @@ package pl.patryklubik.controller.services;
 import pl.patryklubik.model.EmailTreeItem;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import pl.patryklubik.view.IconResolver;
 
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -21,6 +22,7 @@ public class FetchFoldersService extends Service<Void> {
     private Store store;
     private EmailTreeItem<String> foldersRoot;
     private List<Folder> folderList;
+    private IconResolver iconResolver = new IconResolver();
 
     public FetchFoldersService(Store store, EmailTreeItem<String> foldersRoot, List<Folder> folderList) {
         this.store = store;
@@ -48,6 +50,7 @@ public class FetchFoldersService extends Service<Void> {
         for(Folder folder: folders){
             folderList.add(folder);
             EmailTreeItem<String> emailTreeItem = new EmailTreeItem<String>(folder.getName());
+            emailTreeItem.setGraphic(iconResolver.getIconForFolder(folder.getName()));
             foldersRoot.getChildren().add((emailTreeItem));
             foldersRoot.setExpanded(true);
             fetchMessagesOnFolder(folder, emailTreeItem);
