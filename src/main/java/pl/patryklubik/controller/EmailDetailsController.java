@@ -1,27 +1,29 @@
 package pl.patryklubik.controller;
 
-/**
- * Create by Patryk Łubik on 10.01.2021.
- */
-import javafx.concurrent.Task;
-import javafx.scene.control.Button;
 import pl.patryklubik.EmailManager;
 import pl.patryklubik.controller.services.MessageRendererService;
 import pl.patryklubik.model.EmailMessage;
 import pl.patryklubik.view.ViewFactory;
+
+import javafx.concurrent.Task;
+import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.web.WebView;
 import javafx.concurrent.Service;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeBodyPart;
+
 import java.awt.Desktop;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+/**
+ * Create by Patryk Łubik on 10.01.2021.
+ */
 
 public class EmailDetailsController extends BaseController implements Initializable
 {
@@ -61,16 +63,19 @@ public class EmailDetailsController extends BaseController implements Initializa
     private void loadAttachments(EmailMessage emailMessage){
         if (emailMessage.hasAttachments()){
             for (MimeBodyPart mimeBodyPart: emailMessage.getAttachmentList()){
-                try {
-                    //Button button = new Button(mimeBodyPart.getFileName());
-                    AttachmentButton button = new AttachmentButton(mimeBodyPart);
-                    hBoxDownloads.getChildren().add(button);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                createAttachmentButton(mimeBodyPart);
             }
         } else {
             attachmentLabel.setText("");
+        }
+    }
+
+    private void createAttachmentButton(MimeBodyPart mimeBodyPart) {
+        try {
+            AttachmentButton button = new AttachmentButton(mimeBodyPart);
+            hBoxDownloads.getChildren().add(button);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -104,19 +109,24 @@ public class EmailDetailsController extends BaseController implements Initializa
             service.restart();
             service.setOnSucceeded(e ->{
                 colorGreen();
-                this.setOnAction( e2->{
+                this.setOnAction( eventOpenFile->{
                     File file = new File(downloadedFilePath);
                     Desktop desktop = Desktop.getDesktop();
                     if(file.exists()){
-                        try {
-                            desktop.open(file);
-                        } catch (Exception exp) {
-                            exp.printStackTrace();
-                        }
+                        openFile(file, desktop);
                     }
                 });
             });
         }
+
+        private void openFile(File fileToOpen, Desktop desktop) {
+            try {
+                desktop.open(fileToOpen);
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+
         private void colorBlue(){
             this.setStyle("-fx-background-color: Blue");
         }

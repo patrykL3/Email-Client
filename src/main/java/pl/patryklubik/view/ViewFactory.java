@@ -1,18 +1,22 @@
 package pl.patryklubik.view;
 
-import javafx.scene.image.Image;
+
 import pl.patryklubik.EmailManager;
 import pl.patryklubik.controller.*;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  * Create by Patryk Łubik on 04.01.2021.
  */
+
 public class ViewFactory {
 
     private EmailManager emailManager;

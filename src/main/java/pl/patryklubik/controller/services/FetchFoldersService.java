@@ -1,8 +1,6 @@
 package pl.patryklubik.controller.services;
 
 import pl.patryklubik.model.EmailTreeItem;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import pl.patryklubik.view.IconResolver;
 
 import javax.mail.Folder;
@@ -11,6 +9,9 @@ import javax.mail.MessagingException;
 import javax.mail.Store;
 import javax.mail.event.MessageCountEvent;
 import javax.mail.event.MessageCountListener;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+
 import java.util.List;
 
 /**
@@ -62,24 +63,21 @@ public class FetchFoldersService extends Service<Void> {
         }
     }
 
-    private void addMessageListenerToFolder(Folder folder, EmailTreeItem<String> emailTreeItem) {
+    private void addMessageListenerToFolder(Folder folder, EmailTreeItem<String> emailFolder) {
         folder.addMessageCountListener(new MessageCountListener() {
             @Override
             public void messagesAdded(MessageCountEvent e) {
                 for (int i = 0; i < e.getMessages().length; i++){
                     try {
                         Message message = folder.getMessage(folder.getMessageCount() - i);
-                        emailTreeItem.addEmailToTop(message);
+                        emailFolder.addEmailToTop(message);
                     } catch (MessagingException ex) {
                         ex.printStackTrace();
                     }
                 }
             }
-
             @Override
-            public void messagesRemoved(MessageCountEvent e) {
-                System.out.println("message removed event!!!: " + e);
-            }
+            public void messagesRemoved(MessageCountEvent messageCountEvent) {}
         });
     }
 

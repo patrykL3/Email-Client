@@ -3,6 +3,7 @@ package pl.patryklubik.model;
 /**
  * Create by Patryk Łubik on 09.01.2021.
  */
+
 public class SizeInteger implements Comparable<SizeInteger>{
 
     private int size;

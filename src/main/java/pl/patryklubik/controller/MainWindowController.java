@@ -1,17 +1,18 @@
 package pl.patryklubik.controller;
 
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.web.WebView;
-import javafx.util.Callback;
 import pl.patryklubik.EmailManager;
 import pl.patryklubik.controller.services.MessageRendererService;
 import pl.patryklubik.model.EmailMessage;
 import pl.patryklubik.model.EmailTreeItem;
 import pl.patryklubik.model.SizeInteger;
 import pl.patryklubik.view.ViewFactory;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.web.WebView;
+import javafx.util.Callback;
 
 import java.net.URI;
 import java.net.URL;
@@ -21,7 +22,6 @@ import java.util.ResourceBundle;
 /**
  * Create by Patryk Łubik on 04.01.2021.
  */
-
 
 public class MainWindowController extends BaseController implements Initializable {
 

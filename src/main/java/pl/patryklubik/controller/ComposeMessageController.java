@@ -1,17 +1,18 @@
 package pl.patryklubik.controller;
 
-import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import pl.patryklubik.EmailManager;
 import pl.patryklubik.controller.services.EmailSenderService;
 import pl.patryklubik.model.EmailAccount;
 import pl.patryklubik.view.ViewFactory;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.web.HTMLEditor;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
@@ -58,19 +59,23 @@ public class ComposeMessageController extends BaseController implements Initiali
         emailSenderService.start();
         emailSenderService.setOnSucceeded(e->{
             EmailSendingResult emailSendingResult = emailSenderService.getValue();
-            switch (emailSendingResult) {
-                case SUCCESS:
-                    Stage stage = (Stage) recipientTextField.getScene().getWindow();
-                    viewFactory.closeStage(stage);
-                    break;
-                case FAILED_BY_PROVIDER:
-                    errorLabel.setText("Provider error!");
-                    break;
-                case FAILED_BY_UNEXPECTED_ERROR:
-                    errorLabel.setText("Unexpected error!");
-                    break;
-            }
+            reactToResultEmailSending(emailSendingResult);
         });
+    }
+
+    private void reactToResultEmailSending(EmailSendingResult emailSendingResult){
+        switch (emailSendingResult) {
+            case SUCCESS:
+                Stage stage = (Stage) recipientTextField.getScene().getWindow();
+                viewFactory.closeStage(stage);
+                break;
+            case FAILED_BY_PROVIDER:
+                errorLabel.setText("Provider error!");
+                break;
+            case FAILED_BY_UNEXPECTED_ERROR:
+                errorLabel.setText("Unexpected error!");
+                break;
+        }
     }
 
     @FXML

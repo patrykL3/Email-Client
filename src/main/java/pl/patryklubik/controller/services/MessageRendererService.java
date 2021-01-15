@@ -1,15 +1,16 @@
 package pl.patryklubik.controller.services;
 
+import pl.patryklubik.model.EmailMessage;
+
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.web.WebEngine;
-import pl.patryklubik.model.EmailMessage;
-
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.internet.MimeBodyPart;
+
 import java.io.IOException;
 
 /**
