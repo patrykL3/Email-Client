@@ -1,8 +1,5 @@
 package pl.patryklubik;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TreeItem;
 import pl.patryklubik.controller.services.FetchFoldersService;
 import pl.patryklubik.controller.services.FolderUpdaterService;
 import pl.patryklubik.model.EmailAccount;
@@ -10,8 +7,12 @@ import pl.patryklubik.model.EmailMessage;
 import pl.patryklubik.model.EmailTreeItem;
 import pl.patryklubik.view.IconResolver;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TreeItem;
 import javax.mail.Flags;
 import javax.mail.Folder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,6 @@ import java.util.List;
  */
 public class EmailManager {
 
-    //Folder handling:
     private TreeItem<String> foldersRoot = new TreeItem<String>("");
     private EmailTreeItem<String> selectedFolder;
     private FolderUpdaterService folderUpdaterService;

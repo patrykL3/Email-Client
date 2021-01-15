@@ -3,7 +3,6 @@ package pl.patryklubik.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
-
 import javax.mail.Flags;
 import javax.mail.Message;
 import javax.mail.MessagingException;

@@ -1,16 +1,17 @@
 package pl.patryklubik.controller;
 
+import pl.patryklubik.EmailManager;
+import pl.patryklubik.view.ViewFactory;
+import pl.patryklubik.view.ColorTheme;
+import pl.patryklubik.view.FontSize;
+
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-import pl.patryklubik.EmailManager;
-import pl.patryklubik.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
-import pl.patryklubik.view.ColorTheme;
-import pl.patryklubik.view.FontSize;
 
 import java.net.URL;
 import java.util.ResourceBundle;

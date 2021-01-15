@@ -3,6 +3,7 @@ package pl.patryklubik.controller.services;
 import pl.patryklubik.EmailManager;
 import pl.patryklubik.controller.EmailLoginResult;
 import pl.patryklubik.model.EmailAccount;
+
 import javax.mail.*;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;

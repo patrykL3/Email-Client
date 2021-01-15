@@ -1,11 +1,12 @@
 package pl.patryklubik.model;
 
-/**
- * Create by Patryk Łubik on 06.01.2021.
- */
 import javax.mail.Session;
 import javax.mail.Store;
 import java.util.Properties;
+
+/**
+ * Create by Patryk Łubik on 06.01.2021.
+ */
 
 public class EmailAccount {
 

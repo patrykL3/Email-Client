@@ -1,12 +1,13 @@
 package pl.patryklubik;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
 import pl.patryklubik.controller.presistance.PersistenceAccess;
 import pl.patryklubik.controller.presistance.ValidAccount;
 import pl.patryklubik.controller.services.LoginService;
 import pl.patryklubik.model.EmailAccount;
 import pl.patryklubik.view.ViewFactory;
+
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
