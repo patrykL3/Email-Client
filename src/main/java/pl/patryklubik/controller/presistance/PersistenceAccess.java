@@ -1,5 +1,7 @@
 package pl.patryklubik.controller.presistance;
 
+import pl.patryklubik.model.EmailAccount;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +18,18 @@ public class PersistenceAccess {
     public List<ValidAccount> loadFromPersistence(){
         List<ValidAccount> resultList = new ArrayList<ValidAccount>();
         try {
-            FileInputStream fileInputStream = new FileInputStream(VALID_ACCOUNTS_LOCATION);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            List<ValidAccount> persistedList = (List<ValidAccount>) objectInputStream.readObject();
-            decodePasswords(persistedList);
-            resultList.addAll(persistedList);
+            File fileWithAccountsData = new File(VALID_ACCOUNTS_LOCATION);
+
+            if(fileWithAccountsData.exists()) {
+                FileInputStream fileInputStream = new FileInputStream(VALID_ACCOUNTS_LOCATION);
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+                List<ValidAccount> persistedList = (List<ValidAccount>) objectInputStream.readObject();
+                decodePasswords(persistedList);
+                resultList.addAll(persistedList);
+            } else {
+                resultList = null;
+            }
+
         } catch ( Exception e){
             e.printStackTrace();
         }
@@ -28,18 +37,33 @@ public class PersistenceAccess {
     }
 
 
-    public void saveToPersistence(List<ValidAccount> validAccounts){
+    public void saveToPersistence(List<EmailAccount> emailAccountsList){
         try {
             File file = new File(VALID_ACCOUNTS_LOCATION);
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            encodePasswords(validAccounts);
-            objectOutputStream.writeObject(validAccounts);
-            objectOutputStream.close();
-            fileOutputStream.close();
+            List<ValidAccount> validAccounts = createValidAccountsFromEmailAccounts(emailAccountsList);
+            if(!validAccounts.isEmpty()) {
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+                encodePasswords(validAccounts);
+                objectOutputStream.writeObject(validAccounts);
+                objectOutputStream.close();
+                fileOutputStream.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private List<ValidAccount> createValidAccountsFromEmailAccounts(List<EmailAccount> emailAccountsList) {
+        List<ValidAccount> validAccountList = new ArrayList<>();
+
+        for (EmailAccount emailAccount: emailAccountsList){
+            ValidAccount validAccount = new ValidAccount(emailAccount.getAddress(), emailAccount.getPassword());
+            validAccountList.add(validAccount);
+        }
+        return validAccountList;
+
     }
 
     private void decodePasswords(List<ValidAccount> persistedList) {

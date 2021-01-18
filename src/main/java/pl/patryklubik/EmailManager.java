@@ -1,7 +1,7 @@
 package pl.patryklubik;
 
-import pl.patryklubik.controller.services.FetchFoldersService;
 import pl.patryklubik.controller.services.FolderUpdaterService;
+import pl.patryklubik.controller.services.ServiceManager;
 import pl.patryklubik.model.EmailAccount;
 import pl.patryklubik.model.EmailMessage;
 import pl.patryklubik.model.EmailTreeItem;
@@ -21,6 +21,7 @@ import java.util.List;
  */
 public class EmailManager {
 
+    private ServiceManager serviceManager;
     private TreeItem<String> foldersRoot = new TreeItem<String>("");
     private EmailTreeItem<String> selectedFolder;
     private FolderUpdaterService folderUpdaterService;
@@ -28,6 +29,16 @@ public class EmailManager {
     private EmailMessage selectedMessage;
     private ObservableList<EmailAccount> emailAccounts = FXCollections.observableArrayList();
     private IconResolver iconResolver = new IconResolver();
+
+    public EmailManager(){
+        this(new ServiceManager());
+        folderUpdaterService = new FolderUpdaterService(folderList);
+        folderUpdaterService.start();
+    }
+
+    public EmailManager(ServiceManager serviceManager){
+        this.serviceManager = serviceManager;
+    }
 
     public  ObservableList<EmailAccount> getEmailAccounts(){
         return  emailAccounts;
@@ -86,18 +97,13 @@ public class EmailManager {
         }
     }
 
-    public EmailManager(){
-        folderUpdaterService = new FolderUpdaterService(folderList);
-        folderUpdaterService.start();
-    }
-
     public void addEmailAccount(EmailAccount emailAccount){
         emailAccounts.add(emailAccount);
-        EmailTreeItem<String> treeItem = new EmailTreeItem<String>(emailAccount.getAddress());
-        treeItem.setGraphic(iconResolver.getIconForFolder(emailAccount.getAddress()));
-        FetchFoldersService fetchFoldersService = new FetchFoldersService(emailAccount.getStore(), treeItem, folderList);
-        fetchFoldersService.start();
-        foldersRoot.getChildren().add(treeItem);
+        EmailTreeItem<String> emailTreeItem = new EmailTreeItem<String>(emailAccount.getAddress());
+        emailTreeItem.setGraphic(iconResolver.getIconForFolder(emailAccount.getAddress()));
+        emailTreeItem.setExpanded(true);
+        foldersRoot.getChildren().add(emailTreeItem);
+        serviceManager.submitFetchFoldersJob(emailAccount.getStore(), emailTreeItem, folderList);
     }
 
 }
