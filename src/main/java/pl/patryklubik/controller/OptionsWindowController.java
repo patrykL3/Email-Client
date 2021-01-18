@@ -20,7 +20,6 @@ import java.util.ResourceBundle;
  * Create by Patryk Łubik on 04.01.2021.
  */
 
-
 public class OptionsWindowController extends BaseController implements Initializable {
 
     public OptionsWindowController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {

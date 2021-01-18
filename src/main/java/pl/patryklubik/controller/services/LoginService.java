@@ -24,6 +24,10 @@ public class LoginService extends Service<EmailLoginResult>{
         this.emailManager = emailManager;
     }
 
+    public void setEmailAccount(EmailAccount emailAccount){
+        this.emailAccount = emailAccount;
+    }
+
     private EmailLoginResult login() {
         Authenticator authenticator = new Authenticator() {
             @Override

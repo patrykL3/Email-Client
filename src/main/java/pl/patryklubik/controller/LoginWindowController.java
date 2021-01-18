@@ -17,6 +17,8 @@ import java.util.ResourceBundle;
 
 public class LoginWindowController extends BaseController implements Initializable {
 
+    private LoginService loginService;
+
     @FXML
     private TextField emailAddressField;
 
@@ -28,6 +30,16 @@ public class LoginWindowController extends BaseController implements Initializab
 
     public LoginWindowController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
         super(emailManager, viewFactory, fxmlName);
+        this.loginService = new LoginService (null,emailManager);
+    }
+
+    public LoginWindowController(EmailManager emailManager,ViewFactory viewFactory, String fxmlName,
+                                 TextField emailAddressField, PasswordField passwordField, Label errorLabel, LoginService loginService ) {
+        super(emailManager, viewFactory, fxmlName);
+        this.emailAddressField = emailAddressField;
+        this.passwordField = passwordField;
+        this.errorLabel = errorLabel;
+        this.loginService = loginService;
     }
 
     @FXML
@@ -35,7 +47,7 @@ public class LoginWindowController extends BaseController implements Initializab
         if (fieldsAreValid()) {
 
             EmailAccount emailAccount = new EmailAccount(emailAddressField.getText(), passwordField.getText());
-            LoginService loginService = new LoginService(emailAccount, emailManager);
+            loginService.setEmailAccount(emailAccount);
             loginService.start();
 
             loginService.setOnSucceeded(event -> {
@@ -82,7 +94,5 @@ public class LoginWindowController extends BaseController implements Initializab
     public void initialize(URL url, ResourceBundle resourceBundle) {
         emailAddressField.setText("");
         passwordField.setText("");
-
-
     }
 }

@@ -90,10 +90,7 @@ public class FetchFoldersService extends Service<Void> {
                     protected Object call() throws Exception {
                         if(folder.getType() != Folder.HOLDS_FOLDERS){
                             folder.open(Folder.READ_WRITE);
-                            int folderSize = folder.getMessageCount();
-                            for(int i = folderSize; i > 0; i--){
-                                emailTreeItem.addEmail(folder.getMessage(i));
-                            }
+                            addEmailsToTree(folder, emailTreeItem);
                         }
                         return null;
                     }
@@ -101,5 +98,12 @@ public class FetchFoldersService extends Service<Void> {
             }
         };
         fetchMessagesService.start();
+    }
+
+    private void addEmailsToTree(Folder folder, EmailTreeItem<String> emailTreeItem) throws MessagingException {
+        int folderSize = folder.getMessageCount();
+        for(int i = folderSize; i > 0; i--){
+            emailTreeItem.addEmail(folder.getMessage(i));
+        }
     }
 }

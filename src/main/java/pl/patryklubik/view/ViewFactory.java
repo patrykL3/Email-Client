@@ -41,6 +41,10 @@ public class ViewFactory {
         return colorTheme;
     }
 
+    public EmailManager getEmailManager() {
+        return emailManager;
+    }
+
     public void setColorTheme(ColorTheme colorTheme) {
         this.colorTheme = colorTheme;
     }

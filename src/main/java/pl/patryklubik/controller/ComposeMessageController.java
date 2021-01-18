@@ -1,7 +1,9 @@
 package pl.patryklubik.controller;
 
+import javafx.scene.control.PasswordField;
 import pl.patryklubik.EmailManager;
 import pl.patryklubik.controller.services.EmailSenderService;
+import pl.patryklubik.controller.services.LoginService;
 import pl.patryklubik.model.EmailAccount;
 import pl.patryklubik.view.ViewFactory;
 
@@ -88,6 +90,10 @@ public class ComposeMessageController extends BaseController implements Initiali
         setAttachLabelText(selectedFile.getName());
     }
 
+    public ComposeMessageController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
+        super(emailManager, viewFactory, fxmlName);
+    }
+
     private void setAttachLabelText(String selectedFileName) {
         attachLabel.setText(attachLabel.getText() + selectedFileName + "      ");
     }
@@ -98,7 +104,4 @@ public class ComposeMessageController extends BaseController implements Initiali
         emailAccountChoice.setValue(emailManager.getEmailAccounts().get(0));
     }
 
-    public ComposeMessageController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
-        super(emailManager, viewFactory, fxmlName);
-    }
 }
