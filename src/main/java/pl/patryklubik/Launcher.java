@@ -1,7 +1,7 @@
 package pl.patryklubik;
 
-        import javafx.application.Application;
-        import javafx.stage.Stage;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 public class Launcher extends Application {
 
