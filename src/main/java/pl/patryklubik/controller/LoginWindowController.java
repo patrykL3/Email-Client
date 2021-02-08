@@ -48,7 +48,7 @@ public class LoginWindowController extends BaseController implements Initializab
 
             EmailAccount emailAccount = new EmailAccount(emailAddressField.getText(), passwordField.getText());
             loginService.setEmailAccount(emailAccount);
-            loginService.start();
+            loginService.restart();
 
             loginService.setOnSucceeded(event -> {
                 EmailLoginResult emailLoginResult = loginService.getValue();
